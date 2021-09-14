@@ -1,12 +1,12 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Reply Preference -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
     <string-array name="sort_entries">
         <item>ID</item>
         <item>Coin</item>
         <item>Open price</item>
         <item>Close price</item>
     </string-array>
-    <string-array name="sort_values" tools:ignore="InconsistentArrays">
+    <string-array name="sort_values" >
         <item>id</item>
         <item>coinName</item>
         <item>openPrice</item>
@@ -16,7 +16,7 @@
         <item>Room</item>
         <item>SQLite Cursor</item>
     </string-array>
-    <string-array name="db_interface_entries" tools:ignore="InconsistentArrays">
+    <string-array name="db_interface_entries" >
         <item>room</item>
         <item>cursor</item>
     </string-array>

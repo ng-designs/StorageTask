@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp">
+
+ <androidx.appcompat.widget.LinearLayoutCompat
+     android:id = "@+id/relativeLayout1"
+     android:layout_width = "fill_parent"
+     android:layout_height = "wrap_content"
+     android:background = "?attr/colorOnPrimary">
+
+  <TextView
+      android:id = "@+id/sNo"
+      android:layout_width = "0dp"
+      android:layout_height = "match_parent"
+      android:layout_weight = "1"
+      android:background = "@drawable/cell_shape"
+      android:ellipsize = "end"
+      android:padding = "5dp"
+      android:text = "id"
+      android:singleLine = "true"
+      android:visibility="gone"/>
+
+  <TextView
+      android:id = "@+id/product"
+      android:layout_width = "0dp"
+      android:layout_height = "match_parent"
+      android:layout_weight = "1"
+      android:background = "@drawable/cell_shape"
+      android:ellipsize = "end"
+      android:padding = "5dp"
+      android:text = "name"
+      android:singleLine = "true" />
+
+  <TextView
+      android:id = "@+id/category"
+      android:layout_width = "0dp"
+      android:layout_height = "match_parent"
+      android:layout_weight = "1"
+      android:background = "@drawable/cell_shape"
+      android:ellipsize = "end"
+      android:padding = "5dp"
+      android:text = "age"
+      android:singleLine = "true" />
+
+  <TextView
+      android:id = "@+id/price"
+      android:layout_width = "0dp"
+      android:layout_height = "match_parent"
+      android:layout_weight = "1"
+      android:background = "@drawable/cell_shape"
+      android:ellipsize = "end"
+      android:padding = "5dp"
+      android:text = "breed"
+      android:singleLine = "true" />
+ </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.cardview.widget.CardView>
