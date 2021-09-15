@@ -11,14 +11,14 @@ import ng_designs.storagetask.domain.repository.IOrdersRepository
 class OrdersRepository(private val db: OrdersDatabase) : IOrdersRepository {
     private val dao get() = db.dao
 
-    override val ordersFlow: Flow<List<Order>> = dao.getAll().map { storedList ->
-        storedList.map { it.toOrder() }
+    override fun getAll(): Flow<List<Order>> = dao.getAll().map { orderList ->
+        orderList.map { it.toOrder() }
     }
 
-    override suspend fun saveOrder(app: Order) = dao.insert(app.toDbOrder())
+    override suspend fun saveOrder(order: Order) = dao.insert(order.toDbOrder())
 
-    override suspend fun removeOrder(app: Order) = dao.delete(app.toDbOrder())
+    override suspend fun removeOrder(order: Order) = dao.delete(order.toDbOrder())
 
-    override suspend fun updateOrder(app: Order) = dao.update(app.toDbOrder())
+    override suspend fun updateOrder(order: Order) = dao.update(order.toDbOrder())
 
 }

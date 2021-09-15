@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import ng_designs.storagetask.domain.entities.Order
 
 interface IOrdersRepository {
-    val ordersFlow: Flow<List<Order>>
-    suspend fun saveOrder(app: Order)
-    suspend fun removeOrder(app: Order)
-    suspend fun updateOrder(app: Order)
+    fun getAll(): Flow<List<Order>>
+    suspend fun saveOrder(order: Order)
+    suspend fun removeOrder(order: Order)
+    suspend fun updateOrder(order: Order)
 }

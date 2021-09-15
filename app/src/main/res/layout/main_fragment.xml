@@ -73,7 +73,7 @@
         tools:listitem="@layout/recycler_vew_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonAddNewData"
+        android:id="@+id/button_add_new_order"
         android:clickable="true"
         android:focusable="true"
         android:layout_width="wrap_content"

@@ -8,13 +8,13 @@ import ng_designs.storagetask.domain.entities.dbOrder
 @Dao
 interface OrderDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(storedApp: dbOrder)
+    suspend fun insert(order: dbOrder)
 
     @Update
-    suspend fun update(storedApp: dbOrder)
+    suspend fun update(order: dbOrder)
 
     @Delete
-    suspend fun delete(storedApp: dbOrder)
+    suspend fun delete(order: dbOrder)
 
     @Query("SELECT * FROM orders")
     fun getAll(): Flow<List<dbOrder>>

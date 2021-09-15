@@ -15,48 +15,48 @@
      android:background = "?attr/colorOnPrimary">
 
   <TextView
-      android:id = "@+id/sNo"
+      android:id = "@+id/order_id"
       android:layout_width = "0dp"
       android:layout_height = "match_parent"
-      android:layout_weight = "1"
+      android:layout_weight = "0.30"
       android:background = "@drawable/cell_shape"
       android:ellipsize = "end"
       android:padding = "5dp"
       android:text = "id"
       android:singleLine = "true"
-      android:visibility="gone"/>
+      />
 
   <TextView
-      android:id = "@+id/product"
+      android:id = "@+id/coin"
       android:layout_width = "0dp"
       android:layout_height = "match_parent"
-      android:layout_weight = "1"
+      android:layout_weight = "0.7"
       android:background = "@drawable/cell_shape"
       android:ellipsize = "end"
       android:padding = "5dp"
-      android:text = "name"
+      android:text = "coin"
       android:singleLine = "true" />
 
   <TextView
-      android:id = "@+id/category"
+      android:id = "@+id/open_price"
       android:layout_width = "0dp"
       android:layout_height = "match_parent"
       android:layout_weight = "1"
       android:background = "@drawable/cell_shape"
       android:ellipsize = "end"
       android:padding = "5dp"
-      android:text = "age"
+      android:text = "open price"
       android:singleLine = "true" />
 
   <TextView
-      android:id = "@+id/price"
+      android:id = "@+id/close_price"
       android:layout_width = "0dp"
       android:layout_height = "match_parent"
       android:layout_weight = "1"
       android:background = "@drawable/cell_shape"
       android:ellipsize = "end"
       android:padding = "5dp"
-      android:text = "breed"
+      android:text = "close price"
       android:singleLine = "true" />
  </androidx.appcompat.widget.LinearLayoutCompat>
 
