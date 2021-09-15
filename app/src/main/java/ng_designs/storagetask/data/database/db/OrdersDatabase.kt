@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ng_designs.storagetask.data.database.dao.OrderDAO
-import ng_designs.storagetask.domain.entities.dbOrder
+import ng_designs.storagetask.data.database.entities.dbOrder
 
 @Database(entities = [dbOrder::class], version = 2)
 abstract class OrdersDatabase : RoomDatabase() {
@@ -17,8 +17,6 @@ abstract class OrdersDatabase : RoomDatabase() {
                 context,
                 OrdersDatabase::class.java,
                 "orders_database"
-            )
-                .fallbackToDestructiveMigration()
-                .build()
+            ).fallbackToDestructiveMigration().build()
     }
 }

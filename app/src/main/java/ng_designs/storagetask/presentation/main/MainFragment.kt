@@ -1,21 +1,25 @@
 package ng_designs.storagetask.presentation.main
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.flow.*
+import ng_designs.storagetask.R
 import ng_designs.storagetask.databinding.MainFragmentBinding
 import ng_designs.storagetask.domain.entities.Order
 import ng_designs.storagetask.presentation.MainActivity
 import ng_designs.storagetask.presentation.adapters.OrdersAdapter
 import ng_designs.storagetask.presentation.dialogs.add_order.AddOrderDialog
 import ng_designs.storagetask.presentation.dialogs.add_order.AlertDialogCallbacks
+import java.lang.Exception
+import kotlin.system.exitProcess
 
 class MainFragment : Fragment() {
 
@@ -28,9 +32,8 @@ class MainFragment : Fragment() {
     private var binding: MainFragmentBinding? = null
 
     private val callbackWatcher = object : AlertDialogCallbacks {
-        override fun OnOrderDataEntered(order: Order) {
+        override fun onOrderDataEntered(order: Order) {
             viewModel.save(order)
-            viewModel.orders.onEach(::submitOrders).launchIn(lifecycleScope)
         }
     }
 
@@ -39,8 +42,12 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View = MainFragmentBinding.inflate(inflater).also { binding = it }.root
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
+
 
         views {
             mainFragmentRecyclerView.adapter = OrdersAdapter()
@@ -48,11 +55,10 @@ class MainFragment : Fragment() {
 
             buttonAddNewOrder.setOnClickListener {
                 AddOrderDialog(requireActivity() as MainActivity, callbackWatcher)
-//                viewModel.save(newOrder)
-//                Log.i("USER OUTPUT",newOrder.toString())
             }
         }
 
+        Log.i("onCreateView", "Before submitOrders")
         viewModel.orders.onEach(::submitOrders).launchIn(lifecycleScope)
     }
 
@@ -62,8 +68,31 @@ class MainFragment : Fragment() {
 
     private fun <T> views(block: MainFragmentBinding.() -> T): T? = binding?.block()
 
-    override fun onResume() {
-        viewModel.orders.onEach(::submitOrders).launchIn(lifecycleScope)
-        super.onResume()
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.btn_exit -> {
+                activity?.finish()
+                exitProcess(0)
+            }
+            R.id.btn_settings -> {
+                findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+//    override fun onClickItem(note: AppNote) {
+//        val bundle = Bundle()
+//        bundle.putSerializable("note", note)
+//        findNavController().navigate(R.id.action_mainFragment_to_noteFragment, bundle)
+//    }
 }

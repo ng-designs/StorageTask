@@ -18,7 +18,7 @@ class AddOrderDialog(activity: MainActivity, private val callbacks:AlertDialogCa
                             openPriceEdittext.text.toString().toFloat(),
                             closePriceEdittext.text.toString().toFloat())
 
-                        callbacks.OnOrderDataEntered(order)
+                        callbacks.onOrderDataEntered(order)
                     }
                 }
             }

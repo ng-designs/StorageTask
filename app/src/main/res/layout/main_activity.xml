@@ -8,6 +8,7 @@
     tools:context=".presentation.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:background="@color/design_default_color_primary"
         android:id="@+id/activity_toolbar"
         app:title="Storage Task"
         app:subtitle="Interface: Room"
@@ -15,7 +16,8 @@
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu="@menu/main_menu"/>
 
     <fragment
         tools:ignore="FragmentTagUsage"

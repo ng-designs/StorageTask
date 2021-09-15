@@ -2,7 +2,7 @@ package ng_designs.storagetask.data.database.dao
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import ng_designs.storagetask.domain.entities.dbOrder
+import ng_designs.storagetask.data.database.entities.dbOrder
 
 
 @Dao
