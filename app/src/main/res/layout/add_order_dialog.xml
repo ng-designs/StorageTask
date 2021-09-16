@@ -36,7 +36,7 @@
     <EditText
         android:id="@+id/pair_name_edittext"
         android:layout_width="150dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:imeOptions="flagNoExtractUi"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
     <EditText
         android:id="@+id/open_price_edittext"
         android:layout_width="150dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:imeOptions="flagNoExtractUi"
         android:inputType="number"
         android:textSize="20sp"
@@ -79,7 +79,7 @@
     <EditText
         android:id="@+id/close_price_edittext"
         android:layout_width="150dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:imeOptions="flagNoExtractUi"
         android:inputType="number"
         android:textSize="20sp"

@@ -1,7 +1,7 @@
-package ng_designs.storagetask.presentation.dialogs.add_order
+package ng_designs.storagetask.presentation.helpers
 
 import ng_designs.storagetask.domain.entities.Order
 
-interface AlertDialogCallbacks {
+interface DialogCallbacks {
     fun onOrderDataEntered(order: Order)
 }

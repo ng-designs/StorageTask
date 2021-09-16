@@ -15,6 +15,23 @@ class OrdersRepository(private val db: OrdersDatabase) : IOrdersRepository {
         orderList.map { it.toOrder() }
     }
 
+//    override fun getAllSortedBy(sortBy: String): Flow<List<Order>> = dao.getAll().map { orderList ->
+//        orderList.map { it.toOrder() }.apply{
+//            when(sortBy){
+//                "coinName" -> this.sortedBy { it.coinName }
+//                "openPrice" -> this.sortedBy { it.openPrice }
+//                "closePrice" -> this.sortedBy { it.closePrice }
+//                else -> this.sortedBy { it.id }
+//            }
+//        }
+//    }
+
+    override fun getAllSortedBy(sortBy: String): Flow<List<Order>> = dao.getSorted(sortBy).map { orderList ->
+        orderList.map { it.toOrder() }
+    }
+
+    override suspend fun dropTable() { dao.drop(); dao.resetAutoIncrement() }
+
     override suspend fun saveOrder(order: Order) = dao.insert(order.toDbOrder())
 
     override suspend fun removeOrder(order: Order) = dao.delete(order.toDbOrder())

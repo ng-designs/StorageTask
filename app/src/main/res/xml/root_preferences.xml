@@ -21,6 +21,12 @@
             app:key="db_interface"
             app:title="Database interface"
             app:useSimpleSummaryProvider="true" />
+        
+        <Preference
+            app:key="clear_table"
+            app:title="Clear table"
+            app:summary="Remove all data from current database table"
+            />
 
     </PreferenceCategory>
 

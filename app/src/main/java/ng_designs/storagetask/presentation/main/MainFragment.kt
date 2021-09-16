@@ -1,26 +1,26 @@
 package ng_designs.storagetask.presentation.main
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import kotlinx.coroutines.flow.*
 import ng_designs.storagetask.R
 import ng_designs.storagetask.databinding.MainFragmentBinding
 import ng_designs.storagetask.domain.entities.Order
 import ng_designs.storagetask.presentation.MainActivity
 import ng_designs.storagetask.presentation.adapters.OrdersAdapter
-import ng_designs.storagetask.presentation.dialogs.add_order.AddOrderDialog
-import ng_designs.storagetask.presentation.dialogs.add_order.AlertDialogCallbacks
-import java.lang.Exception
+import ng_designs.storagetask.presentation.dialogs.AddOrderDialog
+import ng_designs.storagetask.presentation.helpers.DialogCallbacks
+import ng_designs.storagetask.presentation.helpers.SwipeHelper
 import kotlin.system.exitProcess
 
+@SuppressLint("RestrictedApi")
 class MainFragment : Fragment() {
 
     companion object {
@@ -31,7 +31,10 @@ class MainFragment : Fragment() {
     private val adapter: OrdersAdapter? get() = views { mainFragmentRecyclerView.adapter as? OrdersAdapter }
     private var binding: MainFragmentBinding? = null
 
-    private val callbackWatcher = object : AlertDialogCallbacks {
+    private val prefManager : PreferenceManager by lazy { PreferenceManager(this.context) }
+
+    private val callbackWatcher = object : DialogCallbacks {
+
         override fun onOrderDataEntered(order: Order) {
             viewModel.save(order)
         }
@@ -47,18 +50,23 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-
+        prefManager.sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, s ->
+            if(s == "sort_by"){
+                val newValue = sharedPreferences.all[s].toString()
+//                viewModel.getSorted(newValue)
+                viewModel.getSortedOrders(newValue)
+                Log.i("USER", "Sorting is changed to : $newValue")
+            }
+        }
 
         views {
             mainFragmentRecyclerView.adapter = OrdersAdapter()
-//            SwipeHelper(viewModel::delete).attachToRecyclerView(notesList)
+            SwipeHelper(viewModel::delete).attachToRecyclerView(mainFragmentRecyclerView)
 
             buttonAddNewOrder.setOnClickListener {
                 AddOrderDialog(requireActivity() as MainActivity, callbackWatcher)
             }
         }
-
-        Log.i("onCreateView", "Before submitOrders")
         viewModel.orders.onEach(::submitOrders).launchIn(lifecycleScope)
     }
 
@@ -89,10 +97,4 @@ class MainFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-//    override fun onClickItem(note: AppNote) {
-//        val bundle = Bundle()
-//        bundle.putSerializable("note", note)
-//        findNavController().navigate(R.id.action_mainFragment_to_noteFragment, bundle)
-//    }
 }
