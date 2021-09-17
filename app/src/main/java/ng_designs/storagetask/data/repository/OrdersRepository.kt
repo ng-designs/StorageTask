@@ -15,17 +15,6 @@ class OrdersRepository(private val db: OrdersDatabase) : IOrdersRepository {
         orderList.map { it.toOrder() }
     }
 
-//    override fun getAllSortedBy(sortBy: String): Flow<List<Order>> = dao.getAll().map { orderList ->
-//        orderList.map { it.toOrder() }.apply{
-//            when(sortBy){
-//                "coinName" -> this.sortedBy { it.coinName }
-//                "openPrice" -> this.sortedBy { it.openPrice }
-//                "closePrice" -> this.sortedBy { it.closePrice }
-//                else -> this.sortedBy { it.id }
-//            }
-//        }
-//    }
-
     override fun getAllSortedBy(sortBy: String): Flow<List<Order>> = dao.getSorted(sortBy).map { orderList ->
         orderList.map { it.toOrder() }
     }

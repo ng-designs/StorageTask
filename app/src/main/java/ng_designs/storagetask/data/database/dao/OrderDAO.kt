@@ -4,7 +4,7 @@ import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import ng_designs.storagetask.data.database.entities.dbOrder
 
-internal const val SQL_GET_ALL_SORTED =
+internal const val SQL_GET_SORTED =
     "SELECT * FROM orders ORDER BY " +
             "CASE WHEN :sortBy = 'id' THEN id END ASC," +
             "CASE WHEN :sortBy = 'coinName' THEN coinName END ASC," +
@@ -29,7 +29,7 @@ interface OrderDAO {
     @Query("DELETE FROM sqlite_sequence WHERE name = 'orders'")
     suspend fun resetAutoIncrement()
 
-    @Query(SQL_GET_ALL_SORTED)
+    @Query(SQL_GET_SORTED)
     fun getSorted(sortBy: String): Flow<List<dbOrder>>
 
     @Query("SELECT * FROM orders")

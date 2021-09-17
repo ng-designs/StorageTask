@@ -14,7 +14,7 @@ class OrdersApp:Application() {
         super.onCreate()
 
         ServiceLocator.register<Context>(this)
-        ServiceLocator.register<OrdersDatabase>(OrdersDatabase.getDatabase(locate()))
+        ServiceLocator.register(OrdersDatabase.getDatabase(locate()))
         ServiceLocator.register(OrdersRepository(locate()))
     }
 }

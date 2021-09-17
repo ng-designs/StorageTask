@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.*
 import ng_designs.storagetask.R
 import ng_designs.storagetask.databinding.MainFragmentBinding
 import ng_designs.storagetask.domain.entities.Order
+import ng_designs.storagetask.domain.utils.locate
 import ng_designs.storagetask.presentation.MainActivity
 import ng_designs.storagetask.presentation.adapters.OrdersAdapter
 import ng_designs.storagetask.presentation.dialogs.AddOrderDialog
@@ -30,8 +31,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
     private val adapter: OrdersAdapter? get() = views { mainFragmentRecyclerView.adapter as? OrdersAdapter }
     private var binding: MainFragmentBinding? = null
-
-    private val prefManager : PreferenceManager by lazy { PreferenceManager(this.context) }
+//    private val prefManager : PreferenceManager by lazy { PreferenceManager(locate()) }
 
     private val callbackWatcher = object : DialogCallbacks {
 
@@ -49,15 +49,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-
-        prefManager.sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, s ->
-            if(s == "sort_by"){
-                val newValue = sharedPreferences.all[s].toString()
-//                viewModel.getSorted(newValue)
-                viewModel.getSortedOrders(newValue)
-                Log.i("USER", "Sorting is changed to : $newValue")
-            }
-        }
 
         views {
             mainFragmentRecyclerView.adapter = OrdersAdapter()

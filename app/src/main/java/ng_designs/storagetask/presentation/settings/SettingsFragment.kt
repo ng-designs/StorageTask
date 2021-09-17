@@ -20,7 +20,6 @@ import ng_designs.storagetask.presentation.main.MainViewModel
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private val viewModel: SettingsViewModel by viewModels()
-    private val mViewModel: MainViewModel by viewModels()
 
     private val callbackWatcher = object : SettingsCallbacks {
 
@@ -29,8 +28,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         override fun onPrefValueChanged() {
-            Log.i("USER", findPreference<Preference>("sort_by").toString())
-//            viewModel.getSortedOrders(findPreference<Preference>("sort_by").toString())
         }
     }
 
@@ -39,7 +36,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = (activity as AppCompatActivity?)!!.findViewById<Toolbar>(R.id.activity_toolbar)
         toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_baseline_arrow_back_24,null)
-//        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
         toolbar.setNavigationOnClickListener {
             findNavController().navigate(R.id.action_settingsFragment_to_mainFragment)
@@ -54,12 +50,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val clearDb = findPreference<Preference>("clear_table")
         clearDb!!.setOnPreferenceClickListener {
             DropTableAlertDialogDialog(activity as MainActivity, callbackWatcher)
-            true
-        }
-
-        findPreference<Preference>("sort_by")!!.setOnPreferenceChangeListener { _, newValue ->
-//            mViewModel.getSortedOrders(newValue.toString())
-//            Log.i("USER", "Sorting is changed to : $newValue")
             true
         }
     }
