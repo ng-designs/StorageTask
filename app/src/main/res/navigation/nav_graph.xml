@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="ng_designs.storagetask.presentation.settings.SettingsFragment"
+        android:name="ng_designs.storagetask.presentation.screens.settings.SettingsFragment"
         android:label="SettingsFragment" >
         <action
             android:id="@+id/action_settingsFragment_to_mainFragment"

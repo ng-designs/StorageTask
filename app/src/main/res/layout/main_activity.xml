@@ -5,13 +5,14 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+    tools:context=".presentation.screens.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:background="@color/design_default_color_primary"
         android:id="@+id/activity_toolbar"
         app:title="Storage Task"
-        app:subtitle="Interface: Room"
+        app:titleTextColor="@color/white"
+        app:subtitleTextColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"

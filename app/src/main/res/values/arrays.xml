@@ -12,12 +12,12 @@
         <item>openPrice</item>
         <item>closePrice</item>
     </string-array>
-    <string-array name="db_interface_values">
+    <string-array name="access_type_values">
         <item>Room</item>
-        <item>SQLite Cursor</item>
+        <item>Cursor</item>
     </string-array>
-    <string-array name="db_interface_entries" tools:ignore="InconsistentArrays">
-        <item>room</item>
-        <item>cursor</item>
+    <string-array name="access_type_entries" tools:ignore="InconsistentArrays">
+        <item>Room</item>
+        <item>Cursor SQL</item>
     </string-array>
 </resources>

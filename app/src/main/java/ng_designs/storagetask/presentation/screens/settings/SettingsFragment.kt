@@ -2,11 +2,13 @@ package ng_designs.storagetask.presentation.screens.settings
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import ng_designs.storagetask.R
@@ -43,6 +45,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
+
+        val accessType  = findPreference<Preference>("access_type")
+
+        accessType?.setOnPreferenceChangeListener { preference, newValue ->
+            (activity as MainActivity)
+                .findViewById<Toolbar>(R.id.activity_toolbar)
+                .subtitle = "DB Access type: $newValue"
+            true
+        }
 
         val clearDb = findPreference<Preference>("clear_table")
         clearDb!!.setOnPreferenceClickListener {

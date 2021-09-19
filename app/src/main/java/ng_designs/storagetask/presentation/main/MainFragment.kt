@@ -1,27 +1,23 @@
 package ng_designs.storagetask.presentation.main
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import ng_designs.storagetask.R
 import ng_designs.storagetask.databinding.MainFragmentBinding
 import ng_designs.storagetask.domain.entities.Order
-import ng_designs.storagetask.domain.utils.locate
-import ng_designs.storagetask.presentation.MainActivity
 import ng_designs.storagetask.presentation.adapters.OrdersAdapter
 import ng_designs.storagetask.presentation.dialogs.AddOrderDialog
 import ng_designs.storagetask.presentation.helpers.DialogCallbacks
 import ng_designs.storagetask.presentation.helpers.SwipeHelper
+import ng_designs.storagetask.presentation.screens.MainActivity
 import kotlin.system.exitProcess
 
-@SuppressLint("RestrictedApi")
 class MainFragment : Fragment() {
 
     companion object {
@@ -31,7 +27,6 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
     private val adapter: OrdersAdapter? get() = views { mainFragmentRecyclerView.adapter as? OrdersAdapter }
     private var binding: MainFragmentBinding? = null
-//    private val prefManager : PreferenceManager by lazy { PreferenceManager(locate()) }
 
     private val callbackWatcher = object : DialogCallbacks {
 

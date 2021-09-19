@@ -16,9 +16,9 @@
 
         <ListPreference
             app:defaultValue="room"
-            app:entries="@array/db_interface_entries"
-            app:entryValues="@array/db_interface_values"
-            app:key="db_interface"
+            app:entries="@array/access_type_entries"
+            app:entryValues="@array/access_type_values"
+            app:key="access_type"
             app:title="Database interface"
             app:useSimpleSummaryProvider="true" />
         
