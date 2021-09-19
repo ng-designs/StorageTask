@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'kotlin-parcelize'
 }
 
 android {
@@ -32,7 +31,7 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 }
 
@@ -56,9 +55,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.preference:preference-ktx:1.1.1'
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
 
     implementation 'androidx.room:room-runtime:2.3.0'
-//    implementation 'androidx.room:room-common:2.3.0'
     implementation 'androidx.room:room-ktx:2.3.0'
     kapt 'androidx.room:room-compiler:2.3.0'
     testImplementation 'junit:junit:4.13.2'

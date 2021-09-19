@@ -1,28 +1,24 @@
 package ng_designs.storagetask.presentation.screens.main
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
-import kotlinx.coroutines.flow.*
 import ng_designs.storagetask.R
 import ng_designs.storagetask.databinding.MainFragmentBinding
 import ng_designs.storagetask.domain.entities.Order
 import ng_designs.storagetask.domain.utils.locate
-import ng_designs.storagetask.presentation.screens.MainActivity
 import ng_designs.storagetask.presentation.adapters.OrdersAdapter
 import ng_designs.storagetask.presentation.dialogs.AddOrderDialog
 import ng_designs.storagetask.presentation.helpers.DialogCallbacks
 import ng_designs.storagetask.presentation.helpers.SwipeHelper
+import ng_designs.storagetask.presentation.screens.MainActivity
 import kotlin.system.exitProcess
 
-@SuppressLint("RestrictedApi")
 class MainFragment : Fragment() {
 
     companion object {
