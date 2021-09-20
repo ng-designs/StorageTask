@@ -1,4 +1,4 @@
-package ng_designs.storagetask.data.database.dao
+package ng_designs.storagetask.data.database.room
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +12,7 @@ internal const val SQL_GET_SORTED =
             "CASE WHEN :sortBy = 'closePrice' THEN closePrice END ASC"
 
 @Dao
-interface OrderDAO {
+interface OrderDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(order: dbOrder)
@@ -32,6 +32,6 @@ interface OrderDAO {
     @Query(SQL_GET_SORTED)
     fun getSorted(sortBy: String): Flow<List<dbOrder>>
 
-    @Query("SELECT * FROM orders")
-    fun getAll(): Flow<List<dbOrder>>
+//    @Query("SELECT * FROM orders")
+//    fun getAll(): Flow<List<dbOrder>>
 }

@@ -1,50 +1,89 @@
 package ng_designs.storagetask.data.repository
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
+import ng_designs.storagetask.data.database.cursor.CursorDao
 import ng_designs.storagetask.data.database.db.OrdersDatabase
+import ng_designs.storagetask.data.database.room.OrderDao
 import ng_designs.storagetask.data.database.utils.toDbOrder
 import ng_designs.storagetask.data.database.utils.toOrder
 import ng_designs.storagetask.domain.entities.Order
+import ng_designs.storagetask.domain.repository.IOrdersRepository
 import ng_designs.storagetask.domain.utils.locate
 
 class OrdersRepository(private val db: OrdersDatabase) : IOrdersRepository {
     private val prefs : SharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(locate()) }
-    private val dao get() = db.dao
+    private val room get() = db.dao
+    private val curs get() = CursorDao(locate())
 
-    override fun getAll(): Flow<List<Order>>  = dao.getAll().map { orderList ->
-        orderList.map { it.toOrder() }
-    }
+    @ExperimentalCoroutinesApi
+    override fun getAllSortedBy(sortBy: String): Flow<List<Order>> = daoFlow()
+        .flatMapLatest { dao -> dao.getSorted(sortBy) }
+        .map { ordersList -> ordersList.map { it.toOrder() } }
 
-    override fun getAllSortedBy(sortBy: String): Flow<List<Order>> = dao.getSorted(sortBy).map { orderList ->
-        orderList.map { it.toOrder() }
-    }
     @ExperimentalCoroutinesApi
     override fun sortFlow(): Flow<String> = callbackFlow {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPrefs, s ->
-            if(s == "sort_by") sharedPrefs.getString("sort_by",null)?: run {
-                Log.i("SORT FLOW", "Sort preference is null")
-                "id" 
-            }
+            if (s == "sort_by") sharedPrefs.getString("sort_by", null) ?: run { "id" }
         }
 
         prefs.registerOnSharedPreferenceChangeListener(listener)
-        offer(prefs.getString("sort_by",null)!!)
+
+        offer(prefs.getString("sort_by",null)?: "id")
 
         awaitClose{
             prefs.unregisterOnSharedPreferenceChangeListener(listener)
         }
     }
 
-    override suspend fun saveOrder(order: Order) = dao.insert(order.toDbOrder())
+    @ExperimentalCoroutinesApi
+    private fun daoFlow(): Flow<OrderDao> = callbackFlow {
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPrefs, s ->
+            if(s == "access_type"){
+                when(sharedPrefs.getString(s,null)){
+                    "Room" -> room
+                    else -> curs
+                }
+            }
+        }
+        prefs.registerOnSharedPreferenceChangeListener(listener)
 
-    override suspend fun removeOrder(order: Order) = dao.delete(order.toDbOrder())
+        offer (
+            getDaoBySetting(prefs.getString("access_type",null)?: "Room")
+        )
 
-    override suspend fun updateOrder(order: Order) = dao.update(order.toDbOrder())
+        awaitClose {
+            prefs.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+    }
 
-    override suspend fun clearTable() { dao.drop(); dao.resetAutoIncrement() }
+    private fun getDaoBySetting(setting:String) : OrderDao {
+        return when(prefs.getString("access_type",null)){
+            "Room" -> room
+            else -> curs
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    override suspend fun saveOrder(order: Order) =
+        getDaoBySetting(prefs.getString("access_type",null)?: "Room")
+        .insert(order.toDbOrder())
+
+
+    override suspend fun removeOrder(order: Order) =
+        getDaoBySetting(prefs.getString("access_type",null)?: "Room")
+            .delete(order.toDbOrder())
+
+    override suspend fun updateOrder(order: Order) =
+        getDaoBySetting(prefs.getString("access_type",null)?: "Room")
+            .update(order.toDbOrder())
+
+    override suspend fun clearTable() {
+        getDaoBySetting(prefs.getString("access_type",null)?: "Room").drop()
+        getDaoBySetting(prefs.getString("access_type",null)?: "Room").resetAutoIncrement()
+    }
+
 }
